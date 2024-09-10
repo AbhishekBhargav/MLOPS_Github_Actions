@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Activate Conda environment
+      run: |
+        source ~/miniconda3/etc/profile.d/conda.sh
+        conda activate poc  
+
+    - name: Install dependencies (if needed)
+      run: |
+        pip install -r requirements.txt
+
+    - name: Build Docker image
+      run: |
+        docker build -t abhishekpulle/iris_gha:latest .
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Tag Docker image
+      run: docker tag abhishekpulle/iris_gha:latest abhishekpulle/iris_gha:latest
+
+    - name: Push Docker image to Docker Hub
+      run: docker push abhishekpulle/iris_gha:latest
+
+    - name: Test Docker container locally
+      run: |
+        docker run -d -p 8501:8501 abhishekpulle/iris_gha:latest

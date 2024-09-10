@@ -1,0 +1,2 @@
+docker build -t abhishekpulle/iris_gha:latest . 
+docker run -p 8501:8501 abhishekpulle/iris_gha
