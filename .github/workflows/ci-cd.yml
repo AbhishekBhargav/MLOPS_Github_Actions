@@ -16,14 +16,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Activate Conda environment
-      run: |
-        source ~/miniconda3/etc/profile.d/conda.sh
-        conda activate mlops  
+    # - name: Activate Conda environment
+    #   run: |
+    #     source ~/miniconda3/etc/profile.d/conda.sh
+    #     conda activate mlops  
 
-    - name: Install dependencies (if needed)
-      run: |
-        pip install -r requirements.txt
+    # - name: Install dependencies (if needed)
+    #   run: |
+    #     pip install -r requirements.txt
 
     - name: Build Docker image
       run: |
