@@ -19,7 +19,7 @@ jobs:
     - name: Activate Conda environment
       run: |
         source ~/miniconda3/etc/profile.d/conda.sh
-        conda activate poc  
+        conda activate mlops  
 
     - name: Install dependencies (if needed)
       run: |
